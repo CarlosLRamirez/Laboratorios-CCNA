@@ -17,7 +17,7 @@ Switch(config)#
 #### Configurar hostname
 ```text
 Switch(config)#hostname CCNA1
-Switch(config)#
+CCNA1(config)#
 ```
 
 #### Configurar password consola
