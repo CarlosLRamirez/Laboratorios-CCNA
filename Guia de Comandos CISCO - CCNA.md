@@ -78,9 +78,9 @@ CCNA1#copy running-config startup-config
 CCNA1#
 ```
 
-## Otros comandos
+### Otros comandos
 
-# habilitación de SSH
+#### habilitación de SSH
 =======================
 R1(config)#hostname R1
 R1(config)#ip domain-name cisco.gt
@@ -93,27 +93,27 @@ R1(config-line)#login local
 R1(config-line)#exit
 R1(config)#ip ssh version 2
 
-# cambiar el nivel de privilegios de un usuario (0-15)
+#### cambiar el nivel de privilegios de un usuario (0-15)
 ======================================================
 R1(config)#username admin privilege 15
  
-#exigir que las contraseñas tengan un minimo de 10 caracteres
+#### exigir que las contraseñas tengan un minimo de 10 caracteres
 ===============================================================
 R1(config)#security passwords min-length 10
 
-#Bloquear un usuario por 120s si tiene 3 intentos fallidos en 60s
+#### Bloquear un usuario por 120s si tiene 3 intentos fallidos en 60s
 ====================================================================
 R1(config)#login block-for 120 attempts 3 within 60
 
-#Desconectar una sesion de EXEC luego de 5min y 30seg (default 10min)
+#### Desconectar una sesion de EXEC luego de 5min y 30seg (default 10min)
 =====================================================================
 R1(config-line)# exec-timeout 5 30 
 
-#Deshabilitar la busqueda de DNS
+#### Deshabilitar la busqueda de DNS
 ================================
 Switch(config)#no ip domain-lookup
 
-#Configurar el nombre de dominio
+#### Configurar el nombre de dominio
 ================================
 R1(config)#ip domain-name cisco.gt
 
