@@ -27,7 +27,7 @@
     - user2 / 12345
 
 ## Procedimiento Paso a Paso:
-1. Definición de VLANS
+### 1. Definición de VLANS
 
 ```
 DIST(config)#vlan 2
@@ -41,7 +41,7 @@ DIST(config-vlan)#name Servidores
 DIST(config-vlan)#exit
 DIST(config)#
 ```
-2. Puertos troncales
+### 2. Puertos troncales
 
 ```
 DIST(config)#interface range Gi0/1-2,Fa0/3
@@ -66,8 +66,7 @@ DATACENTER(config-if-range)#switchport mode trunk
 DATACENTER(config-if-range)#switchport trunk allowed vlan 2,3,4,99
 DATACENTER(config-if-range)#exit
 ```
-
-3. Puertos de acceso
+### 3. Puertos de acceso
 
 ```
 LAN(config)#interface fa0/1
@@ -83,9 +82,7 @@ DATACENTER(config-if-range)#switchport mode access
 DATACENTER(config-if-range)#switchport access vlan 99
 DATACENTER(config-if-range)#exit
 ```
-
-4. Enrutamiento inter-vlan (incluido el DHCP relay)
-
+### 4. Enrutamiento inter-vlan (incluido el DHCP relay)
 ```
 IVR(config)#interface gi0/0/0.2
 IVR(config-subif)#encapsulation dot1q 2
@@ -120,7 +117,7 @@ IVR(config-if)#exit
 IVR(config-if)#
 ```
 
-5. DHCP Server
+### 5. DHCP Server
 
 ```
 DHCP(config)#interface gi0/0/0
@@ -155,9 +152,9 @@ DHCP(dhcp-config)#dns-server 8.8.8.8
 DHCP(dhcp-config)#
 ```
 
-6. Configuración de WLC y redes Wifi
+### 6. Configuración de WLC y redes Wifi
    
-### Configuración de interfaces 
+#### 6.1 Interfaces  
 
 Controller > Interfaces
 ![wlan all interfaces](images/wlan_interfaces_all.png)
@@ -171,13 +168,13 @@ Controller > Interfacez > invitados
 ![wlan interface invitados](images/wlan_interface_guest.png)
 
 
-### Configuración de Servidor Radius (AAA) en la WLC
+#### 6.2 Configuración de Servidor Radius (AAA) en la WLC
 ![wlan radius server](images/wlan_radius_server.png)
 
 ![wlan radius server summary](images/wlan_radius_servers_summary.png)
 
 
-## Configuración de las redes WLAN
+#### 6.3 Configuración de las redes WLAN
 
 WLANs
 ![picture 24](images/wlan_WLANs.png)
@@ -219,14 +216,14 @@ WLANs > wifi_invitados > Advanced
 ![wlan invidatos advanced](images/wlan_wifi_invitados_advanced.png)
 
 
-7. Servidor Radius
+### 7. Servidor Radius
 
 ![picture 28](images/radius_ipaddress.png)
 
 ![picture 29](images/radius_AAAservice.png)  
 
 
-8. Clientes Wifi
+### 8. Clientes Wifi
 
 ![picture 31](images/wifi_client_step1.png)  
 
