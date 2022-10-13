@@ -1,5 +1,7 @@
 # Laboratorio CCNA: WLAN+DHCP+RADIUS
 
+![Topologia](images/LabTopology-WLANIntegrado.png)
+
 ## Archivo PT:
 
 [Configuración final](labs/labCCNA%20WLAN+DHCP+RADIUS.pkt)
