@@ -1,8 +1,8 @@
-# CCNA Lab - Inter Vlan Routing - Multilayer Switch Part (SVIs)
+# CCNA Lab - Inter Vlan Routing - Multilayer Switch (SVIs)
 
 ## Objetivo
 
-El proposito de este laboratorio es configurar una red con 3 VLAN, una para cada departamento de la organización y 1 VLAN adicional para la administración de los equipos de red (mgmt). Para el enrutamiento Inter VLAN se tiene un switch multilayer (L2/L3) con SVI's configuradas en cada VLAN.
+El proposito de este laboratorio es configurar una red con 3 VLANs, una por departamento de la organización y 1 VLAN adicional para la administración de los equipos de red (mgmt). Para el enrutamiento Inter VLAN se tiene un switch multilayer (L2/L3) con SVI's configuradas en cada VLAN.
 
 ## Topología 
 
@@ -10,12 +10,12 @@ El proposito de este laboratorio es configurar una red con 3 VLAN, una para cada
 
 
 ## Archivo de PT
-Configuración [final](labs/ccna-lab-intervlan-L3switch-answer.pkt)
+
+Este es el laboratorio con la [configuración final](labs/ccna-lab-intervlan-L3switch-answer.pkt)
 
 ## Información General
 
-#### Tabla de VLANs
-
+### Tabla de VLANs
     
 | Vlan ID  | Name        | Subnet         |
 | -------- |:-----------:| --------------:|
@@ -24,7 +24,7 @@ Configuración [final](labs/ccna-lab-intervlan-L3switch-answer.pkt)
 | 12       | markeing    | 172.16.11.0/24 |
 | 99       | mgmt        | 172.16.99.0/24 |
 
-#### Asignación de puertos y direccionamiento IP
+### Asignación de puertos y direccionamiento IP
     
 | Device   | Port         | Port Type | Vlan(s)     | IP address   |
 | -------- |:---------:   | :--------:|:-----------:|------------  |
@@ -54,7 +54,7 @@ Configuración [final](labs/ccna-lab-intervlan-L3switch-answer.pkt)
 
 ## Instrucciones
 
-### Parte 1: Parametros iniciales (opcional)
+### Parte 1: Parametros iniciales
 - En todos los dispositivos, configure el nombre de host,
 - Configure un mensaje del dia que contenga la palabra `advertencia`
 - Proteja el acceso a consola con el password `cisco`
@@ -77,8 +77,8 @@ Configuración [final](labs/ccna-lab-intervlan-L3switch-answer.pkt)
 - Configure los enlaces troncales en SW1, SW2 y MainSW de forma estática, de acuerdo con la [tabla de asignación de puertos](#asignación-de-puertos-y-direccionamiento-ip). ***Unicamente debe permitir el tráfico de las vlans utilizadas en el ejercicio y rechazar cualquier trafico que pertenezca a otra VLAN.***
 
 - Habilite las interfaces de administración en SW1 y SW2 y asigne las direcciónes IP, de acuerdo con la información [proporcionada](#asignación-de-puertos-y-direccionamiento-ip).
+  
 - Configure lo necesario para que el switch puede ser alcanzado desde redes externas
-
 
  ### Parte 4: Enrutamiento inter vlan
  - Habilite el enrutamiento inter-vlan en MainSW mediante la configuración de las SVIs correspondientes, según lo indicado en la [tabla](#asignación-de-puertos-y-direccionamiento-ip), no olvide habilitar en enrutamiento IPv4 en el router multicapa.
