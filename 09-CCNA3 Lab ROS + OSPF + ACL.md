@@ -127,7 +127,7 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 - Verifique que los hosts de GT y HN puedan acceder por medio del explorador a www.google.com.
 - Pruebe el acceso por SSH a los dispositivos de red.
 
-### Sección 10: Verificación de Conectividad
+### Sección 10: Implementación de ACLs 
 - Ahora que ha probado la conectidad en toda la red, implemente las siguientes politicas de seguridad mediante la configuración de Listas de Control de Acceso en los Routers GT,HN y CR:
   
 1. No permitir que las redes de estudiantes tengan conectividad con los profesores 
