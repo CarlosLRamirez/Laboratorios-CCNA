@@ -141,7 +141,7 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
 
 ## Resolución Paso a Paso
-```
+
 
 ### Sección 1: Parametros iniciales
 hostname R-HN
@@ -201,6 +201,59 @@ ip address 10.10.10.2 255.255.255.252
 no shutdown
 exit
 
+### Sección 4: VLANs y Puertos de Switch
+
+##### 4.1 Declarar las VLANs en el Switch
+vlan 10
+name estudiantes
+vlan 20
+name profesores
+vlan 30
+name Admin-Red
+exit
+
+#### 4.2 Asignacion de puertos de acceso
+interface range f0/1-10
+switchport mode access
+swtichport access vlan 10
+exit
+interface range f0/11-20
+switchport mode access
+switchport access vlan 20
+exit
+
+#### 4.3 Configuracion de puerto troncal en el switch
+interface g0/1
+switchport mode trunk 
+switchport trunk allowed vlan 10,20,30
+switchport trunk native vlan 99
+switchport nonegotiate 
+exit
+
+#### 4.4 Configuracion de SVI para administracion del switch
+interface vlan 30
+ip address 10.1.30.2 255.255.255.0
+exit
+ip default-gateway 10.1.30.1
+
+### Sección 5: Enrutamiento Inter-VLAN
+interface g0/0/0.10
+description estudiantes-honduras
+encapsulation dot1Q 10
+ip address 10.1.10.1 255.255.255.0
+exit
+
+interface g0/0/0.20
+description profesores-honduras
+encapsulation dot1Q 20
+ip address 10.1.20.1 255.255.255.0
+exit
+
+interface g0/0/0.30
+description adminred-honduras
+encapsulation dot1Q 30
+ip address 10.1.30.1 255.255.255.0
+exit
 
 
 
@@ -224,4 +277,20 @@ exit
 
 
 
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
