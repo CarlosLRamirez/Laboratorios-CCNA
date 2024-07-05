@@ -136,3 +136,93 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
   5. No permitir que los profesores ni los estudiantes tengan conectividad con la red de Administración-TI.
   6. Solo los profesores pueden salir a internet.
   7. Solo la PC TI01 puede acceder por SSH a los dispositivos de red.
+
+
+
+
+## Resolución Paso a Paso
+
+
+### Sección 1: Parametros iniciales
+hostname R-HN
+banner motd "advertencia: acceso restringido"
+line console 0
+password cisco
+login
+exit
+enable secret class
+service password-encryption 
+
+### Sección 2: Acceso por SSH
+ip domain-name mylab.com
+crypto key generate rsa
+1024
+username admin secret letmein
+username admin privilege 15
+line vty 0 15
+login local
+transport input ssh
+exit
+ip ssh version 2
+no ip domain-lookup
+
+### Sección 3: Configuración de Enlaces WAN
+
+#### R-HN (HONDURAS)
+interface S0/1/0
+description enlace Honduras-Costa Rica
+ip address 10.10.10.1 255.255.255.252
+no shutdown
+interface S0/1/1
+description enlace Honduras-Guatemala
+ip address 10.10.10.10 255.255.255.252
+no shutdown
+exit
+
+#### R-GT (GUATEMALA)
+interface S0/1/0
+description enlace Honduras-Guatemala
+ip address 10.10.10.9 255.255.255.252
+no shutdown
+interface S0/1/1
+description enlace Guatemala-CostaRica
+ip address 10.10.10.6 255.255.255.252
+no shutdown
+exit
+
+#### R-CR (Costa Rica)
+interface S0/1/0
+description enlace Guatemala-CostaRica
+ip address 10.10.10.5 255.255.255.252
+no shutdown
+interface S0/1/1
+description enlace Honduras-Costa Rica
+ip address 10.10.10.2 255.255.255.252
+no shutdown
+exit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+t
