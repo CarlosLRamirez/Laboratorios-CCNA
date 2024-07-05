@@ -255,6 +255,18 @@ encapsulation dot1Q 30
 ip address 10.1.30.1 255.255.255.0
 exit
 
+interface g0/0/0.99
+description native-honduras
+encapsulation dot1Q 99 native
+exit
+
+interface g0/0/0
+no shutdown
+
+
+
+
+
 
 
 
