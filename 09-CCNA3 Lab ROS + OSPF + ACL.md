@@ -141,7 +141,7 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
 
 ## Resolución Paso a Paso
-
+```
 
 ### Sección 1: Parametros iniciales
 hostname R-HN
@@ -224,5 +224,4 @@ exit
 
 
 
-
-t
+```
