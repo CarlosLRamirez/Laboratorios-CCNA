@@ -138,11 +138,10 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
   7. Solo la PC TI01 puede acceder por SSH a los dispositivos de red.
 
 
-```
 
 ## Resolución Paso a Paso
 
-
+```
 ### Sección 1: Parametros iniciales
 hostname R-HN
 banner motd "advertencia: acceso restringido"
