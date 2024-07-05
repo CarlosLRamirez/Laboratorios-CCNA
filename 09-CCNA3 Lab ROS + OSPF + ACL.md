@@ -138,7 +138,7 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
   7. Solo la PC TI01 puede acceder por SSH a los dispositivos de red.
 
 
-
+```
 
 ## Resolución Paso a Paso
 
@@ -215,7 +215,7 @@ exit
 #### 4.2 Asignacion de puertos de acceso
 interface range f0/1-10
 switchport mode access
-swtichport access vlan 10
+switchport access vlan 10
 exit
 interface range f0/11-20
 switchport mode access
@@ -231,12 +231,20 @@ switchport nonegotiate
 exit
 
 #### 4.4 Configuracion de SVI para administracion del switch
+##### S-HN
 interface vlan 30
 ip address 10.1.30.2 255.255.255.0
 exit
 ip default-gateway 10.1.30.1
 
+##### S-GT
+interface vlan 30
+ip address 10.2.30.2 255.255.255.0
+exit
+ip default-gateway 10.2.30.1
+
 ### Sección 5: Enrutamiento Inter-VLAN
+##### R-HN
 interface g0/0/0.10
 description estudiantes-honduras
 encapsulation dot1Q 10
@@ -258,11 +266,73 @@ exit
 interface g0/0/0.99
 description native-honduras
 encapsulation dot1Q 99 native
-exit
+exit    
 
 interface g0/0/0
 no shutdown
 
+##### R-GT
+interface g0/0/0.10
+description estudiantes-guatemala
+encapsulation dot1Q 10
+ip address 10.2.10.1 255.255.255.0
+exit
+
+interface g0/0/0.20
+description profesores-guatemala
+encapsulation dot1Q 20
+ip address 10.2.20.1 255.255.255.0
+exit
+
+interface g0/0/0.30
+description adminred-guatemala
+encapsulation dot1Q 30
+ip address 10.2.30.1 255.255.255.0
+exit
+
+interface g0/0/0.99
+description native-guatemala
+encapsulation dot1Q 99 native
+exit    
+
+interface g0/0/0
+no shutdown
+
+
+#### Sección 7: Configuración de OSPF
+
+##### R-HN
+interface lo0
+ip address 10.1.1.1 255.255.255.255
+exit
+router ospf 1
+network 10.10.10.0 0.0.0.3 area 0
+network 10.10.10.8 0.0.0.3 area 0
+network 10.1.10.0 0.0.0.255 area 0
+network 10.1.20.0 0.0.0.255 area 0
+network 10.1.30.0 0.0.0.255 area 0
+passive-interface g0/0/0.10
+passive-interface g0/0/0.20
+passive-interface g0/0/0.30
+exit
+
+##### R-GT
+interface lo0
+ip address 10.1.1.2 255.255.255.255
+exit
+router ospf 1
+network 10.10.10.4 0.0.0.3 area 0
+network 10.10.10.8 0.0.0.3 area 0
+network 10.2.10.0 0.0.0.255 area 0
+network 10.2.20.0 0.0.0.255 area 0
+network 10.2.30.0 0.0.0.255 area 0
+passive-interface g0/0/0.10
+passive-interface g0/0/0.20
+passive-interface g0/0/0.30
+exit
+
+
+```
 
 
 
