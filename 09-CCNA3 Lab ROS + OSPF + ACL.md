@@ -358,7 +358,6 @@ interface g0/0/0
 no shutdown
 ```
 
-
 #### 1.7.5.3. R-CR
 ```
 interface g0/0/0.10
@@ -388,9 +387,9 @@ interface g0/0/0
 no shutdown
 ```
 
-#### 1.7.5.1. Sección 7: Configuración de OSPF
+#### 1.7.1. Sección 7: Configuración de OSPF
 
-##### 1.7.5.1.1. R-HN
+##### 1.7.1.1 R-HN
 ```
 interface lo0
 ip address 10.1.1.1 255.255.255.255
@@ -406,7 +405,7 @@ passive-interface g0/0/0.20
 passive-interface g0/0/0.30
 exit
 ```
-##### 1.7.5.1.2. R-GT
+##### 1.7.1.2 R-GT
 ```
 interface lo0
 ip address 10.1.1.2 255.255.255.255
@@ -423,7 +422,23 @@ passive-interface g0/0/0.30
 exit
 
 ```
+##### 1.7.1.3 R-CR
+```
+interface lo0
+ip address 10.1.1.3 255.255.255.255
+exit
+router ospf 1
+network 10.10.10.0 0.0.0.3 area 0
+network 10.10.10.4 0.0.0.3 area 0
+network 10.3.10.0 0.0.0.255 area 0
+network 10.3.20.0 0.0.0.255 area 0
+network 10.3.30.0 0.0.0.255 area 0
+passive-interface g0/0/0.10
+passive-interface g0/0/0.20
+passive-interface g0/0/0.30
+exit
 
+```
 
 
 
