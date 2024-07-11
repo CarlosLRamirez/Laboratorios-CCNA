@@ -22,20 +22,23 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
 ### 1.5.1. Tabla de VLANs y Subredes Asignadas
 
-| País       | VLAN           | Red           | Descripción                  | Rango de Puertos  |
-|------------|----------------|---------------|------------------------------|-------------------|
-| Guatemala  | VLAN 10        | 10.2.10.0/24  | Estudiantes                  | Fa0/1 - Fa0/10    |
-| Guatemala  | VLAN 20        | 10.2.20.0/24  | Profesores                   | Fa0/11 - Fa0/20   |
-| Guatemala  | VLAN 30        | 10.2.30.0/24  | Admin-Red                    | N/A               |
-| Honduras   | VLAN 10        | 10.1.10.0/24  | Estudiantes                  | Fa0/1 - Fa0/10    |
-| Honduras   | VLAN 20        | 10.1.20.0/24  | Profesores                   | Fa0/11 - Fa0/20   |
-| Honduras   | VLAN 30        | 10.1.30.0/24  | Admin-Red                    | N/A               |
-| Costa Rica | VLAN 10        | 10.3.10.0/24  | Servidores                   | Fa0/1 - Fa0/10    |
-| Costa Rica | VLAN 20        | 10.3.20.0/24  | Administración               | Fa0/11 - Fa0/20   |
-| Costa Rica | VLAN 30        | 10.3.30.0/24  | Admin-Red                    | N/A               |
-| Guatemala a Honduras | N/A  | 10.10.10.0/30 | Enlace punto a punto         | N/A               |
-| Guatemala a Costa Rica | N/A| 10.10.10.4/30 | Enlace punto a punto         | N/A               |
-| Honduras a Costa Rica | N/A | 10.10.10.8/30 | Enlace punto a punto         | N/A               |
+| País                   | VLAN    | Red           | Descripción          | Rango de Puertos |
+| ---------------------- | ------- | ------------- | -------------------- | ---------------- |
+| Guatemala              | VLAN 10 | 10.2.10.0/24  | Estudiantes          | Fa0/1 - Fa0/10   |
+| Guatemala              | VLAN 20 | 10.2.20.0/24  | Profesores           | Fa0/11 - Fa0/20  |
+| Guatemala              | VLAN 30 | 10.2.30.0/24  | Admin-Red            | N/A              |
+| Guatemala              | VLAN 99 | --            | Nativa               | N/A              |
+| Honduras               | VLAN 10 | 10.1.10.0/24  | Estudiantes          | Fa0/1 - Fa0/10   |
+| Honduras               | VLAN 20 | 10.1.20.0/24  | Profesores           | Fa0/11 - Fa0/20  |
+| Honduras               | VLAN 30 | 10.1.30.0/24  | Admin-Red            | N/A              |
+| Honduras               | VLAN 99 | --            | Nativa               | N/A              |
+| Costa Rica             | VLAN 10 | 10.3.10.0/24  | Servidores           | Fa0/1 - Fa0/10   |
+| Costa Rica             | VLAN 20 | 10.3.20.0/24  | Administración       | Fa0/11 - Fa0/20  |
+| Costa Rica             | VLAN 30 | 10.3.30.0/24  | Admin-Red            | N/A              |
+| Costa Rica             | VLAN 99 | --            | Nativa               | N/A              |
+| Guatemala a Honduras   | N/A     | 10.10.10.0/30 | Enlace punto a punto | N/A              |
+| Guatemala a Costa Rica | N/A     | 10.10.10.4/30 | Enlace punto a punto | N/A              |
+| Honduras a Costa Rica  | N/A     | 10.10.10.8/30 | Enlace punto a punto | N/A              |
 
 ### 1.5.2. Tabla de Asignación de IPs
 
@@ -141,7 +144,9 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
 ## 1.7. Resolución Paso a Paso
 
-### 1.7.1. Sección 1: Parametros iniciales
+### 1.7.1.  Parametros iniciales
+
+> Repetir en todos los dispositivos de red, unicamente modificando el `hostname`
 
 ```
 hostname R-HN
@@ -153,9 +158,10 @@ exit
 enable secret class
 service password-encryption 
 ```
-> Repetir en todos los dispositivos de red, unicamente modificando el `hostname`
 
-### 1.7.2. Sección 2: Acceso por SSH
+### 1.7.2. Acceso por SSH
+
+> Repetir en todos los dispositivos de red
 
 ```
 ip domain-name mylab.com
@@ -171,9 +177,8 @@ ip ssh version 2
 no ip domain-lookup
 ```
 
-> Repetir en todos los dispositivos de red
 
-### 1.7.3. Sección 3: Configuración de Enlaces WAN
+### 1.7.3.  Configuración de Enlaces WAN
 
 #### 1.7.3.1. R-HN (HONDURAS)
 ```
@@ -202,7 +207,6 @@ exit
 ```
 
 #### 1.7.3.3. R-CR (Costa Rica)
-
 ```
 interface S0/1/0
 description enlace Guatemala-CostaRica
@@ -215,7 +219,7 @@ no shutdown
 exit
 ```
 
-### 1.7.4. Sección 4: VLANs y Puertos de Switch
+### 1.7.4. VLANs y Puertos de Switch
 
 #### 1.7.4.1 Declarar las VLANs en el Switch
 
@@ -243,8 +247,9 @@ name Admin-Red
 exit
 ```
 
-#### 1.7.4.2 Asignacion de puertos de acceso
+#### 1.7.4.2 Asignación de puertos de acceso
 
+> Repetir en todos los switches
 ```
 interface range f0/1-10
 switchport mode access
@@ -258,10 +263,10 @@ interface range f0/21-24
 shutdown
 exit
 ```
+#### 1.7.4.3 Configuración de puerto troncal en el switch
 
 > Repetir en todos los switches
 
-#### 1.7.4.3 Configuracion de puerto troncal en el switch
 ```
 interface g0/1
 switchport mode trunk 
@@ -271,26 +276,25 @@ switchport nonegotiate
 exit
 ```
 
-> Repetir en todos los switches
 
-#### 1.7.4. Configuracion de SVI para administracion del switch
 
-##### 1.7.4.4.1 S-HN
+#### 1.7.4.4. Configuracion de SVI para administracion del switch
+
+##### 1.7.4.4.1. S-HN (Honoduras)
 ```
 interface vlan 30
 ip address 10.1.30.2 255.255.255.0
 exit
 ip default-gateway 10.1.30.1
 ```
-
-##### 1.7.4.4.2 S-GT
+##### 1.7.4.4.2 S-GT (Guatemala)
 ```
 interface vlan 30
 ip address 10.2.30.2 255.255.255.0
 exit
 ip default-gateway 10.2.30.1
 ```
-##### 1.7.4.4.3 S-CR
+##### 1.7.4.4.3 S-CR (Costa Rica)
 ```
 interface vlan 30
 ip address 10.3.30.2 255.255.255.0
@@ -298,9 +302,9 @@ exit
 ip default-gateway 10.3.30.1
 ```
 
-### 1.7.5. Sección 5: Enrutamiento Inter-VLAN
+### 1.7.5. Enrutamiento Inter-VLAN
 
-#### 1.7.5.1. R-HN
+#### 1.7.5.1. R-HN (Honduras)
 ```
 interface g0/0/0.10
 description estudiantes-honduras
@@ -329,7 +333,7 @@ interface g0/0/0
 no shutdown
 ```
 
-#### 1.7.5.2. R-GT
+#### 1.7.5.2. R-GT (Guatemala)
 ```
 interface g0/0/0.10
 description estudiantes-guatemala
@@ -358,7 +362,7 @@ interface g0/0/0
 no shutdown
 ```
 
-#### 1.7.5.3. R-CR
+#### 1.7.5.3. R-CR (Costa Rica)
 ```
 interface g0/0/0.10
 description servidores-costarica
@@ -387,9 +391,9 @@ interface g0/0/0
 no shutdown
 ```
 
-#### 1.7.1. Sección 7: Configuración de OSPF
-
-##### 1.7.1.1 R-HN
+### 1.7.6. Direcciones de los Hosts
+### 1.7.7. Configuración de OSPF
+#### 1.7.7.1 R-HN (Honduras)
 ```
 interface lo0
 ip address 10.1.1.1 255.255.255.255
@@ -405,7 +409,7 @@ passive-interface g0/0/0.20
 passive-interface g0/0/0.30
 exit
 ```
-##### 1.7.1.2 R-GT
+#### 1.7.7.2 R-GT (Guatemala)
 ```
 interface lo0
 ip address 10.1.1.2 255.255.255.255
@@ -422,7 +426,7 @@ passive-interface g0/0/0.30
 exit
 
 ```
-##### 1.7.1.3 R-CR
+#### 1.7.7.3 R-CR (Costa Rica)
 ```
 interface lo0
 ip address 10.1.1.3 255.255.255.255
@@ -440,22 +444,150 @@ exit
 
 ```
 
+### 1.7.8. Configuración de Salida a Internet
 
+> Configuración unicamente en el Router de Costa Rica (R-CR)
 
+```
+interface g0/0/1
+description conexion-ISP
+ip address 12.0.0.2 255.255.255.252
+no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 12.0.0.1
+router ospf 1
+default-information originate 
+```
 
+### 1.7.9 Políticas de Seguridad mediante ACLs
 
+#### 1.7.9.1 ACL Estudiantes Honduras
 
+ **Definición de la ACL** en R-HN
+```
+ip access-list extended EST-HN
+remark "Denegar trafico de Estudiantes HN hacia Profesores HN y GT"
+deny ip 10.1.10.0 0.0.0.255 10.1.20.0 0.0.0.255
+deny ip 10.1.10.0 0.0.0.255 10.2.20.0 0.0.0.255
+remark "Permitir comunicacion con Servidor de Notas solo por HTTP y HTTPs"
+permit tcp 10.1.10.0 0.0.0.255 host 10.3.10.2 eq www
+permit tcp 10.1.10.0 0.0.0.255 host 10.3.10.2 eq 443
+deny ip 10.1.10.0 0.0.0.255 host 10.3.10.2
+remark "Denegar la comunicacion con el Servidor de Contenido"
+deny ip 10.1.10.0 0.0.0.255 host 10.3.10.3
+remark "Denegar la comunicacion con la red de Administración-TI"
+deny ip 10.1.10.0 0.0.0.255 10.3.20.0 0.0.0.255 
+remark "Permitir el trafico INTERNO restante"
+permit ip 10.1.10.0 0.0.0.255 10.0.0.0 0.255.255.255
+exit
+```
+**Asignación a la interfaz (inbound) en R-HN**
 
+```
+interface g0/0/0.10
+ip access-group EST-HN in
+exit
+```
 
+#### 1.7.9.2. ACL Profesores Honduras
 
+**Definición de la ACL en R-HN**
 
+```
+ip access-list extended PRO-HN
+remark "Permitir trafico hacia el Servidor de Notas solo por FTP"
+permit tcp any host 10.3.10.2 eq 21
+permit tcp any host 10.3.10.2 range 1023 65535
+deny ip any host 10.3.10.2
+remark "Permitir trafico hacia el Servidor de Contenido solo por HTTP y HTTPS"
+permit tcp any host 10.3.10.3 eq www
+permit tcp any host 10.3.10.3 eq 443
+deny ip any host 10.3.10.3
+remark "Denegar la comunicacion con la red de Administración-TI"
+deny ip any 10.3.20.0 0.0.0.255 
+remark "Permitir el trafico restante"
+permit ip any any
+exit
+```
 
+**Asignación de la ACL a la interfaz (inbound) en R-HN**
+```
+interface g0/0/0.20
+ip access-group PRO-HN in
+exit
+```
 
+#### 1.7.9.3 ACL Estudiantes Guatemala
 
+ **Definición de la ACL en R-GT**
+ ```
+ip access-list extended EST-GT
+remark "Denegar trafico de Estudiantes GT hacia Profesores HN y GT"
+deny ip any 10.1.20.0 0.0.0.255
+deny ip any 10.2.20.0 0.0.0.255
+remark "Permitir comunicacion con Servidor de Notas solo por HTTP y HTTPs"
+permit tcp any host 10.3.10.2 eq www
+permit tcp any host 10.3.10.2 eq 443
+deny ip any host 10.3.10.2
+remark "Denegar la comunicacion con el Servidor de Contenido"
+deny ip any host 10.3.10.3
+remark "Denegar la comunicacion con la red de Administración-TI"
+deny ip any 10.3.20.0 0.0.0.255 
+remark "Permitir el trafico INTERNO restante"
+permit ip any 10.0.0.0 0.255.255.255
+exit
+```
 
+**Asignación a la interfaz (inbound) en R-GT**
+```
+interface g0/0/0.10
+ip access-group EST-GT in
+exit
+```
 
+#### 1.7.9.4. ACL Profesores Guatemala
 
+**Definición de la ACL en R-GT**
 
+```
+ip access-list extended PRO-GT
+remark "Permitir trafico hacia el Servidor de Notas solo por FTP"
+permit tcp any host 10.3.10.2 eq 21
+permit tcp any host 10.3.10.2 range 1023 65535
+deny ip any host 10.3.10.2
+remark "Permitir trafico hacia el Servidor de Contenido solo por HTTP y HTTPS"
+permit tcp any host 10.3.10.3 eq www
+permit tcp any host 10.3.10.3 eq 443
+deny ip any host 10.3.10.3
+remark "Denegar la comunicacion con la red de Administración-TI"
+deny ip any 10.3.20.0 0.0.0.255 
+remark "Permitir el trafico restante"
+permit ip any any
+exit
+```
+
+**Asignación de la ACL a la interfaz (inbound) en R-GT**
+```
+interface g0/0/0.20
+ip access-group PRO-GT in
+exit
+```
+
+#### 1.7.9.5. ACLs Administración Equipos de Red
+
+```
+ip access-list standard MGMT
+permit host 10.3.20.3
+exit
+line vty 0 15
+access-class MGMT in 
+```
+
+> [!IMPORTANT]
+>
+> !Has completado el laboratorio, espero te sirva en tu proceso de aprendizaje en redes! (
+
+[Archivo con Laboratorio resuleto](labs/lab2jul_final_completo.pkt)
 
 
 
