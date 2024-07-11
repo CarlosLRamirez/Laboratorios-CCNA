@@ -143,10 +143,10 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
 ### 1.7.1. Sección 1: Parametros iniciales
 
-```shell
+```
 hostname R-HN
 banner motd "advertencia: acceso restringido"
-line console 0
+line console 0 
 password cisco
 login
 exit
@@ -202,6 +202,7 @@ exit
 ```
 
 #### 1.7.3.3. R-CR (Costa Rica)
+
 ```
 interface S0/1/0
 description enlace Guatemala-CostaRica
@@ -216,7 +217,10 @@ exit
 
 ### 1.7.4. Sección 4: VLANs y Puertos de Switch
 
-##### 1.7.4.0.1. 4.1 Declarar las VLANs en el Switch
+#### 1.7.4.1 Declarar las VLANs en el Switch
+
+##### 1.7.4.1.1 Switches S-HN y S-GT
+
 ```
 vlan 10
 name estudiantes
@@ -226,9 +230,21 @@ vlan 30
 name Admin-Red
 exit
 ```
-> Repetir en todos los switches
 
-#### 1.7.4.1. 4.2 Asignacion de puertos de acceso
+##### 1.7.4.1.2 Switch S-CR
+
+```
+vlan 10
+name servidores
+vlan 20
+name administracion-TI
+vlan 30
+name Admin-Red
+exit
+```
+
+#### 1.7.4.2 Asignacion de puertos de acceso
+
 ```
 interface range f0/1-10
 switchport mode access
@@ -238,11 +254,14 @@ interface range f0/11-20
 switchport mode access
 switchport access vlan 20
 exit
+interface range f0/21-24
+shutdown
+exit
 ```
 
 > Repetir en todos los switches
 
-#### 1.7.4.2. 4.3 Configuracion de puerto troncal en el switch
+#### 1.7.4.3 Configuracion de puerto troncal en el switch
 ```
 interface g0/1
 switchport mode trunk 
@@ -254,9 +273,9 @@ exit
 
 > Repetir en todos los switches
 
-#### 1.7.4.3. 4.4 Configuracion de SVI para administracion del switch
+#### 1.7.4. Configuracion de SVI para administracion del switch
 
-##### 1.7.4.3.1. S-HN
+##### 1.7.4.4.1 S-HN
 ```
 interface vlan 30
 ip address 10.1.30.2 255.255.255.0
@@ -264,17 +283,24 @@ exit
 ip default-gateway 10.1.30.1
 ```
 
-##### 1.7.4.3.2. S-GT
+##### 1.7.4.4.2 S-GT
 ```
 interface vlan 30
 ip address 10.2.30.2 255.255.255.0
 exit
 ip default-gateway 10.2.30.1
 ```
+##### 1.7.4.4.3 S-CR
+```
+interface vlan 30
+ip address 10.3.30.2 255.255.255.0
+exit
+ip default-gateway 10.3.30.1
+```
 
 ### 1.7.5. Sección 5: Enrutamiento Inter-VLAN
 
-##### 1.7.5.0.1. R-HN
+#### 1.7.5.1. R-HN
 ```
 interface g0/0/0.10
 description estudiantes-honduras
@@ -303,7 +329,7 @@ interface g0/0/0
 no shutdown
 ```
 
-##### 1.7.5.0.2. R-GT
+#### 1.7.5.2. R-GT
 ```
 interface g0/0/0.10
 description estudiantes-guatemala
@@ -325,6 +351,36 @@ exit
 
 interface g0/0/0.99
 description native-guatemala
+encapsulation dot1Q 99 native
+exit    
+
+interface g0/0/0
+no shutdown
+```
+
+
+#### 1.7.5.3. R-CR
+```
+interface g0/0/0.10
+description servidores-costarica
+encapsulation dot1Q 10
+ip address 10.3.10.1 255.255.255.0
+exit
+
+interface g0/0/0.20
+description AdministracionTI-costarica
+encapsulation dot1Q 20
+ip address 10.3.20.1 255.255.255.0
+exit
+
+interface g0/0/0.30
+description adminred-costarica
+encapsulation dot1Q 30
+ip address 10.3.30.1 255.255.255.0
+exit
+
+interface g0/0/0.99
+description native-costarica
 encapsulation dot1Q 99 native
 exit    
 
