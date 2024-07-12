@@ -1,26 +1,26 @@
-# 1. Laboratorio CCNA3 - Router-on-stick + OSPF + ACLs
+# Laboratorio CCNA3 - Router-on-stick + OSPF + ACLs
 
-## 1.1. Objetivo
+## 1. Objetivo
 
 El propósito de este laboratorio es poner en práctica los conocimientos aprendidos sobre enrutamiento inter-VLAN mediante Router-on-stick, OSPF de una sola área y Listas de Control de Acceso (ACLs) en una red cuya topología representa una situación real.
 
-## 1.2. Descripción del Escenario
+## 2. Descripción del Escenario
 
 En el siguiente escenario se presenta el diagrama de red de una institución educativa con operaciones en tres países: Guatemala, Honduras y Costa Rica. Cada uno de estos países cuenta con un router que conecta las redes locales a través de enlaces WAN y utilizan OSPF para el enrutamiento entre las distintas localidades.
 
 Tanto en Guatemala como en Honduras, existen dos VLANs: una para estudiantes y otra para profesores. En Costa Rica se encuentran los servidores centrales de la institución y el personal de administración, así como la salida a internet para toda la red.
 
-## 1.3. Diagrama de Red
+## 3. Diagrama de Red
 
 ![Topología](images/64a7e792b5618caca8a41b905d15b447c98c099a3b03975262b7560990c25e7c.png)  
 
-## 1.4. Archivo inicial de Packet Tracer
+## 4. Archivo inicial de Packet Tracer
 
 Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
-## 1.5. Detalle de direccionamiento IP y asignación de VLANs
+## 5. Detalle de direccionamiento IP y asignación de VLANs
 
-### 1.5.1. Tabla de VLANs y Subredes Asignadas
+### 5.1. Tabla de VLANs y Subredes Asignadas
 
 | País                   | VLAN    | Red           | Descripción          | Rango de Puertos |
 | ---------------------- | ------- | ------------- | -------------------- | ---------------- |
@@ -40,7 +40,7 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 | Guatemala a Costa Rica | N/A     | 10.10.10.4/30 | Enlace punto a punto | N/A              |
 | Honduras a Costa Rica  | N/A     | 10.10.10.8/30 | Enlace punto a punto | N/A              |
 
-### 1.5.2. Tabla de Asignación de IPs
+### 5.2. Tabla de Asignación de IPs
 
 | Dispositivo      | Interfaz         | IP Address         |
 |------------------|------------------|--------------------|
@@ -79,58 +79,58 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 | TI01             | Fa0              | 10.3.20.2/24       |
 | DNS              | Fa0              | 10.3.20.3/24       |
 
-## 1.6. Instrucciones
+## 6. Instrucciones
 
-### 1.6.1. Sección 1: Parámetros iniciales
+### 6.1. Sección 1: Parámetros iniciales
 - En todos los dispositivos, configure el nombre de host.
 - Configure un mensaje del día (MOTD) que contenga la palabra `advertencia`.
 - Proteja el acceso a consola con el password `cisco`.
 - Proteja el acceso a modo EXEC privilegiado con el password `class`.
 - Encripte las contraseñas en el archivo de configuración.
 
-### 1.6.2. Sección 2: Acceso por SSH 
+### 6.2. Sección 2: Acceso por SSH 
 - Configure un nombre de dominio `mylab.com`.
 - Genere un par de llaves RSA con **1024 bits** para habilitar SSH.
 - Cree un usuario `admin` con contraseña segura `letmein` y el **máximo** privilegio.
 - Habilite el acceso por SSH en todas las terminales virtuales disponibles, asegúrese de utilizar la base de datos local para la autenticación de usuarios.
 - Asegúrese de estar utilizando la versión 2 del protocolo SSH.
 
-### 1.6.3. Sección 3: Configuración de Enlaces WAN
+### 6.3. Sección 3: Configuración de Enlaces WAN
 - Configure las interfaces de los enlaces WAN en los routers de GT, HN y CR de acuerdo a la [Tabla de Asignación de IPs](#tabla-de-asignación-de-ips).
 - Agregue una descripción en las interfaces.
 
-### 1.6.4. Sección 4: VLANs y Puertos de Switch
+### 6.4. Sección 4: VLANs y Puertos de Switch
 - Configure las VLANs en S-HN, S-GT y S-CR de acuerdo a la información proporcionada en la [Tabla de VLANs y Subredes Asignadas](#tabla-de-vlans-y-subredes-asignadas).
 - Configure los puertos de acceso en S-HN y S-GT según la información proporcionada en la [Tabla de VLANs y Subredes Asignadas](#tabla-de-vlans-y-subredes-asignadas).
 - Configure los enlaces troncales en S-HN, S-GT y S-CR de forma estática, de acuerdo con la [Tabla de VLANs y Subredes Asignadas](#tabla-de-vlans-y-subredes-asignadas). ***Únicamente debe permitir el tráfico de las VLANs utilizadas en el ejercicio y rechazar cualquier tráfico que pertenezca a otra VLAN.***
 - Habilite las interfaces de administración en S-HN, S-GT y S-CR y asigne las direcciones IP, de acuerdo con la información proporcionada en la [Tabla de Asignación de IPs](#tabla-de-asignación-de-ips).
 - Configure lo necesario para que el switch pueda ser alcanzado desde redes externas.
 
-### 1.6.5. Sección 5: Enrutamiento Inter-VLAN
+### 6.5. Sección 5: Enrutamiento Inter-VLAN
 - Habilite el enrutamiento inter-VLAN en los routers R-HN, R-GT y R-CR mediante la configuración de las subinterfaces correspondientes, según lo indicado en la [Tabla de Asignación de IPs](#tabla-de-asignación-de-ips). No olvide habilitar el enrutamiento IPv4 en los routers.
 
-### 1.6.6. Sección 6: Direcciones de los Hosts
+### 6.6. Sección 6: Direcciones de los Hosts
 - Asigne las direcciones IP a las PCs de acuerdo a la información proporcionada en la [Tabla de Asignación de IPs](#tabla-de-asignación-de-ips).
 - Asigne como DNS la IP del servidor DNS indicado.
 
-### 1.6.7. Sección 7: Configuración de OSPF
+### 6.7. Sección 7: Configuración de OSPF
 - Configure OSPF de una sola área en los routers de HN, GT y CR para anunciar todas las redes.
 - Utilice el ID de Proceso No. 1.
 - Confirme que el router ID asignado sea la IP en la interfaz de loopback.
 - Configure las interfaces pasivas para evitar anunciar paquetes OSPF por las interfaces hacia las LAN.
 
-### 1.6.8. Sección 8: Configuración de Salida a Internet
+### 6.8. Sección 8: Configuración de Salida a Internet
 - Configure la interfaz conectada hacia el ISP con la IP pública asignada.
 - Configure una ruta por defecto en R-CR para enviar el tráfico con destino a internet hacia la IP del ISP (12.0.0.1).
 - Redistribuya esta ruta por defecto por medio del protocolo OSPF en la única área configurada.
 
-### 1.6.9. Sección 9: Verificación de Conectividad
+### 6.9. Sección 9: Verificación de Conectividad
 - Verifique la conectividad entre los dispositivos en diferentes VLANs y localizaciones.
 - Verifique que los hosts de GT y HN obtengan respuesta de las IPs de internet 1.1.1.1 y 8.8.8.8.
 - Verifique que los hosts de GT y HN puedan acceder por medio del explorador a www.google.com.
 - Pruebe el acceso por SSH a los dispositivos de red.
 
-### 1.6.10. Sección 10: Políticas de Seguridad mediante ACLs
+### 6.10. Sección 10: Políticas de Seguridad mediante ACLs
 - Ahora que ha probado la conectividad en toda la red, implemente las siguientes políticas de seguridad mediante la configuración de Listas de Control de Acceso en los Routers GT, HN y CR:
   1. No permitir que las redes de estudiantes tengan conectividad con los profesores.
   2. Los profesores pueden acceder al Servidor de Notas solo por FTP.
@@ -141,10 +141,9 @@ Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
   7. Solo la PC TI01 puede acceder por SSH a los dispositivos de red.
 
 
+## 7. Resolución Paso a Paso
 
-## 1.7. Resolución Paso a Paso
-
-### 1.7.1.  Parametros iniciales
+### 7.1.  Parametros iniciales
 
 > Repetir en todos los dispositivos de red, unicamente modificando el `hostname`
 
@@ -159,7 +158,7 @@ enable secret class
 service password-encryption 
 ```
 
-### 1.7.2. Acceso por SSH
+### 7.2. Acceso por SSH
 
 > Repetir en todos los dispositivos de red
 
@@ -177,10 +176,10 @@ ip ssh version 2
 no ip domain-lookup
 ```
 
+### 7.3.  Configuración de Enlaces WAN
 
-### 1.7.3.  Configuración de Enlaces WAN
+#### 7.3.1. R-HN (HONDURAS)
 
-#### 1.7.3.1. R-HN (HONDURAS)
 ```
 interface S0/1/0
 description enlace Honduras-Costa Rica
@@ -193,7 +192,7 @@ no shutdown
 exit
 ```
 
-#### 1.7.3.2. R-GT (GUATEMALA)
+#### 7.3.2. R-GT (GUATEMALA)
 ```
 interface S0/1/0
 description enlace Honduras-Guatemala
@@ -206,7 +205,7 @@ no shutdown
 exit
 ```
 
-#### 1.7.3.3. R-CR (Costa Rica)
+#### 7.3.3. R-CR (Costa Rica)
 ```
 interface S0/1/0
 description enlace Guatemala-CostaRica
@@ -219,11 +218,11 @@ no shutdown
 exit
 ```
 
-### 1.7.4. VLANs y Puertos de Switch
+### 7.4. Configuración de VLANs y Puertos de Switch
 
-#### 1.7.4.1 Declarar las VLANs en el Switch
+#### 7.4.1 Declarar las VLANs en el Switch
 
-##### 1.7.4.1.1 Switches S-HN y S-GT
+Switches S-HN y S-GT:
 
 ```
 vlan 10
@@ -235,7 +234,7 @@ name Admin-Red
 exit
 ```
 
-##### 1.7.4.1.2 Switch S-CR
+Switch S-CR:
 
 ```
 vlan 10
@@ -247,9 +246,10 @@ name Admin-Red
 exit
 ```
 
-#### 1.7.4.2 Asignación de puertos de acceso
+#### 7.4.2 Asignación de puertos de acceso
 
-> Repetir en todos los switches
+Configurar en todos los switches:
+
 ```
 interface range f0/1-10
 switchport mode access
@@ -263,9 +263,10 @@ interface range f0/21-24
 shutdown
 exit
 ```
-#### 1.7.4.3 Configuración de puerto troncal en el switch
 
-> Repetir en todos los switches
+#### 7.4.3 Configuración de puerto troncal en el switch
+
+Configurar en todos los switches:
 
 ```
 interface g0/1
@@ -276,25 +277,28 @@ switchport nonegotiate
 exit
 ```
 
+#### 7.4.4. Configuracion de SVI para administracion del switch
 
+Switch Honduras (S-HN):
 
-#### 1.7.4.4. Configuracion de SVI para administracion del switch
-
-##### 1.7.4.4.1. S-HN (Honoduras)
 ```
 interface vlan 30
 ip address 10.1.30.2 255.255.255.0
 exit
 ip default-gateway 10.1.30.1
 ```
-##### 1.7.4.4.2 S-GT (Guatemala)
+
+Switch Guatemala (S-GT):
+
 ```
 interface vlan 30
 ip address 10.2.30.2 255.255.255.0
 exit
 ip default-gateway 10.2.30.1
 ```
-##### 1.7.4.4.3 S-CR (Costa Rica)
+
+Switch Costa Rica (S-CR):
+
 ```
 interface vlan 30
 ip address 10.3.30.2 255.255.255.0
@@ -302,9 +306,10 @@ exit
 ip default-gateway 10.3.30.1
 ```
 
-### 1.7.5. Enrutamiento Inter-VLAN
+### 7.5. Enrutamiento Inter-VLAN
 
-#### 1.7.5.1. R-HN (Honduras)
+#### 7.5.1. R-HN (Honduras)
+
 ```
 interface g0/0/0.10
 description estudiantes-honduras
@@ -333,7 +338,8 @@ interface g0/0/0
 no shutdown
 ```
 
-#### 1.7.5.2. R-GT (Guatemala)
+#### 7.5.2. R-GT (Guatemala)
+
 ```
 interface g0/0/0.10
 description estudiantes-guatemala
@@ -362,7 +368,8 @@ interface g0/0/0
 no shutdown
 ```
 
-#### 1.7.5.3. R-CR (Costa Rica)
+#### 7.5.3. R-CR (Costa Rica)
+
 ```
 interface g0/0/0.10
 description servidores-costarica
@@ -391,9 +398,15 @@ interface g0/0/0
 no shutdown
 ```
 
-### 1.7.6. Direcciones de los Hosts
-### 1.7.7. Configuración de OSPF
-#### 1.7.7.1 R-HN (Honduras)
+### 7.6. Direcciones de los Hosts
+
+Configurar los host de acuerdo a las instrucciónes, ejemplo: HN1
+
+![picture 1](images/24bb9bce334f35f974b4735377556e36cbbe959ec5723d07d075d4c5737a5e8b.png)  
+
+### 7.7. Configuración de OSPF
+#### 7.7.1 R-HN (Honduras)
+
 ```
 interface lo0
 ip address 10.1.1.1 255.255.255.255
@@ -409,7 +422,8 @@ passive-interface g0/0/0.20
 passive-interface g0/0/0.30
 exit
 ```
-#### 1.7.7.2 R-GT (Guatemala)
+#### 7.7.2 R-GT (Guatemala)
+
 ```
 interface lo0
 ip address 10.1.1.2 255.255.255.255
@@ -421,12 +435,12 @@ network 10.2.10.0 0.0.0.255 area 0
 network 10.2.20.0 0.0.0.255 area 0
 network 10.2.30.0 0.0.0.255 area 0
 passive-interface g0/0/0.10
-passive-interface g0/0/0.20
+passive-interface g0/0/0.201
 passive-interface g0/0/0.30
 exit
 
 ```
-#### 1.7.7.3 R-CR (Costa Rica)
+#### 7.7.3 R-CR (Costa Rica)
 ```
 interface lo0
 ip address 10.1.1.3 255.255.255.255
@@ -444,9 +458,9 @@ exit
 
 ```
 
-### 1.7.8. Configuración de Salida a Internet
+### 7.8. Configuración de Salida a Internet
 
-> Configuración unicamente en el Router de Costa Rica (R-CR)
+Configuración unicamente en el Router de Costa Rica (R-CR):
 
 ```
 interface g0/0/1
@@ -459,9 +473,9 @@ router ospf 1
 default-information originate 
 ```
 
-### 1.7.9 Políticas de Seguridad mediante ACLs
+### 7.9 Políticas de Seguridad mediante ACLs
 
-#### 1.7.9.1 ACL Estudiantes Honduras
+#### 7.9.1 ACL Estudiantes Honduras
 
  **Definición de la ACL** en R-HN
 ```
@@ -489,7 +503,7 @@ ip access-group EST-HN in
 exit
 ```
 
-#### 1.7.9.2. ACL Profesores Honduras
+#### 7.9.2. ACL Profesores Honduras
 
 **Definición de la ACL en R-HN**
 
@@ -517,7 +531,7 @@ ip access-group PRO-HN in
 exit
 ```
 
-#### 1.7.9.3 ACL Estudiantes Guatemala
+#### 7.9.3 ACL Estudiantes Guatemala
 
  **Definición de la ACL en R-GT**
  ```
@@ -545,7 +559,7 @@ ip access-group EST-GT in
 exit
 ```
 
-#### 1.7.9.4. ACL Profesores Guatemala
+#### 7.9.4. ACL Profesores Guatemala
 
 **Definición de la ACL en R-GT**
 
@@ -573,7 +587,7 @@ ip access-group PRO-GT in
 exit
 ```
 
-#### 1.7.9.5. ACLs Administración Equipos de Red
+#### 7.9.5. ACLs Administración Equipos de Red
 
 ```
 ip access-list standard MGMT
