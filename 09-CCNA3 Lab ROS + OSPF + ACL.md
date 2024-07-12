@@ -1,4 +1,4 @@
-# Laboratorio CCNA3 - Router-on-stick + OSPF + ACLs
+# Laboratorio 09 - CCNA3 - Router-on-stick + OSPF + ACLs
 
 ## 1. Objetivo
 
@@ -12,11 +12,11 @@ Tanto en Guatemala como en Honduras, existen dos VLANs: una para estudiantes y o
 
 ## 3. Diagrama de Red
 
-![Topología](images/64a7e792b5618caca8a41b905d15b447c98c099a3b03975262b7560990c25e7c.png)  
+![Lab09-Diagrama](images/b160657f4fddcc4359321bd19c7e7db85ce8ca91a39f94e9a1c8c58bba0592a7.png)  
 
 ## 4. Archivo inicial de Packet Tracer
 
-Este es el laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
+Este es el archivo del laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
 
 ## 5. Detalle de direccionamiento IP y asignación de VLANs
 
