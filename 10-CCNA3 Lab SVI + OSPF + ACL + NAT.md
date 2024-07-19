@@ -1,7 +1,7 @@
 # Laboratorio 10 - CCNA3 - Switch Capa 3 + OSPF + ACLs + NAT
 
 >[!WARNING]
->EN PROGRESO DE FINALIZACION∫Å
+>EN PROGRESO DE FINALIZACION
 
 ## 1. Objetivo
 
@@ -24,6 +24,9 @@ Este es el archivo del laboratorio con la [configuración inicial](labs ccna-lab
 ## 5. Detalle de direccionamiento IP y asignación de VLANs
 
 ### 5.1. Tabla de VLANs y Subredes Asignadas
+
+>[!WARNING]
+>EN PROGRESO DE FINALIZACION
 
 | País                   | VLAN    | Red           | Descripción          | Rango de Puertos |
 | ---------------------- | ------- | ------------- | -------------------- | ---------------- |
@@ -656,10 +659,10 @@ ip nat inside
 interface Gi1/0/3
 ip nat oustide
 exit
+```
 
 
-
-> [!IMPORTANT]
+> [!NOTE]
 >
 > !Has completado el laboratorio, espero te sirva en tu proceso de aprendizaje en redes! (
 
