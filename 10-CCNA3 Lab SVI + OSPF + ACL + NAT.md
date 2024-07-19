@@ -1,8 +1,11 @@
-# Laboratorio 010 - CCNA3 - Switch Capa 3 + OSPF + ACLs + NAT
+# Laboratorio 10 - CCNA3 - Switch Capa 3 + OSPF + ACLs + NAT
+
+>[!WARNING]
+>EN PROGRESO DE FINALIZACION∫Å
 
 ## 1. Objetivo
 
-El propósito de este laboratorio es poner en práctica los conocimientos aprendidos sobre enrutamiento inter-VLAN mediante Router-on-stick, OSPF de una sola área y Listas de Control de Acceso (ACLs) en una red cuya topología representa una situación real.
+El propósito de este laboratorio es poner en práctica los conocimientos aprendidos sobre enrutamiento inter-VLAN mediante SVI en Switches multicapa, OSPF de una sola área y Listas de Control de Acceso (ACLs) en una red cuya topología representa una situación real.
 
 ## 2. Descripción del Escenario
 
@@ -12,11 +15,11 @@ Tanto en Guatemala como en Honduras, existen dos VLANs: una para estudiantes y o
 
 ## 3. Diagrama de Red
 
-![Lab09-Diagrama](images/b160657f4fddcc4359321bd19c7e7db85ce8ca91a39f94e9a1c8c58bba0592a7.png)  
+![LAB10-DIAGRAMA](images/99966245e251e940ca4bb063e3d9016cf8e45265ed665e9c48b46b5c3e7055ba.png)  
 
 ## 4. Archivo inicial de Packet Tracer
 
-Este es el archivo del laboratorio con la [configuración inicial](labs/lab2jul_init.pkt)
+Este es el archivo del laboratorio con la [configuración inicial](labs ccna-lab-10-SVI-OSFP-AC-NAT-init.pkt)
 
 ## 5. Detalle de direccionamiento IP y asignación de VLANs
 
@@ -44,21 +47,21 @@ Este es el archivo del laboratorio con la [configuración inicial](labs/lab2jul_
 
 | Dispositivo      | Interfaz         | IP Address         |
 |------------------|------------------|--------------------|
-| R-HN             | Gig0/0.10        | 10.1.10.1/24       |
-| R-HN             | Gig0/0.20        | 10.1.20.1/24       |
-| R-HN             | Gig0/0.30        | 10.1.30.1/24       |
+| R-HN             | VLAN10        | 10.1.10.1/24       |
+| R-HN             | VLAN20        | 10.1.20.1/24       |
+| R-HN             | VLAN30        | 10.1.30.1/24       |
 | R-HN             | Se0/1/0          | 10.10.10.1/30      |
 | R-HN             | Se0/1/1          | 10.10.10.10/30     |
 | R-HN             | Lo0              | 10.1.1.1/32        |
-| R-GT             | Gig0/0.10        | 10.2.10.1/24       |
-| R-GT             | Gig0/0.20        | 10.2.20.1/24       |
-| R-GT             | Gig0/0.30        | 10.2.30.1/24       |
+| R-GT             | VLAN10       | 10.2.10.1/24       |
+| R-GT             | VLAN20        | 10.2.20.1/24       |
+| R-GT             | VLAN30        | 10.2.30.1/24       |
 | R-GT             | Se0/1/0          | 10.10.10.9/30      |
 | R-GT             | Se0/1/1          | 10.10.10.6/30      |
 | R-GT             | Lo0              | 10.1.1.2/32        |
-| R-CR             | Gig0/0.10        | 10.3.10.1/24       |
-| R-CR             | Gig0/0.20        | 10.3.20.1/24       |
-| R-CR             | Gig0/0.30        | 10.3.30.1/24       |
+| R-CR             | VLAN10        | 10.3.10.1/24       |
+| R-CR             | VLAN20        | 10.3.20.1/24       |
+| R-CR             | VLAN30        | 10.3.30.1/24       |
 | R-CR             | Se0/1/0          | 10.10.10.5/30      |
 | R-CR             | Se0/1/1          | 10.10.10.2/30      |
 | R-CR             | Gig0/0/1         | 12.0.0.2/30        |
@@ -143,12 +146,14 @@ Este es el archivo del laboratorio con la [configuración inicial](labs/lab2jul_
 
 ## 7. Resolución Paso a Paso
 
+- Instalar las fuentes de energia en los switches L3
+
 ### 7.1.  Parametros iniciales
 
 > Repetir en todos los dispositivos de red, unicamente modificando el `hostname`
 
 ```
-hostname L3-HN
+hostname L3-CR
 banner motd "advertencia: acceso restringido"
 line console 0 
 password cisco
@@ -178,40 +183,50 @@ no ip domain-lookup
 
 ### 7.3.  Configuración de Enlaces WAN
 
-#### 7.3.1. R-HN (HONDURAS)
+#### 7.3.1. L3-HN (HONDURAS)
 
 ```
-interface S0/1/0
+ip routing
+interface G1/0/1
+no switchport
 description enlace Honduras-Costa Rica
 ip address 10.10.10.1 255.255.255.252
 no shutdown
-interface S0/1/1
+exit
+interface G1/0/2
+no switchport
 description enlace Honduras-Guatemala
 ip address 10.10.10.10 255.255.255.252
 no shutdown
 exit
 ```
 
-#### 7.3.2. R-GT (GUATEMALA)
+#### 7.3.2. L3-GT (GUATEMALA)
 ```
-interface S0/1/0
+ip routing
+interface G1/0/1
+no switchport
 description enlace Honduras-Guatemala
 ip address 10.10.10.9 255.255.255.252
 no shutdown
-interface S0/1/1
+interface G1/0/2
+no switchport
 description enlace Guatemala-CostaRica
 ip address 10.10.10.6 255.255.255.252
 no shutdown
 exit
 ```
 
-#### 7.3.3. R-CR (Costa Rica)
+#### 7.3.3. L3-CR (Costa Rica)
 ```
-interface S0/1/0
+ip routing
+interface G1/0/1
+no switchport
 description enlace Guatemala-CostaRica
 ip address 10.10.10.5 255.255.255.252
 no shutdown
-interface S0/1/1
+interface G1/0/2
+no switchport
 description enlace Honduras-Costa Rica
 ip address 10.10.10.2 255.255.255.252
 no shutdown
@@ -220,9 +235,9 @@ exit
 
 ### 7.4. Configuración de VLANs y Puertos de Switch
 
-#### 7.4.1 Declarar las VLANs en el Switch
+#### 7.4.1 Declarar las VLANs en todos los Switch
 
-Switches S-HN y S-GT:
+Switches S-HN, S-GT, L3-HN, L3-GT:
 
 ```
 vlan 10
@@ -234,7 +249,7 @@ name Admin-Red
 exit
 ```
 
-Switch S-CR:
+Switch S-CR, L3-CR:
 
 ```
 vlan 10
@@ -248,7 +263,7 @@ exit
 
 #### 7.4.2 Asignación de puertos de acceso
 
-Configurar en todos los switches:
+Configurar en todos los switches de acceso:
 
 ```
 interface range f0/1-10
@@ -264,9 +279,9 @@ shutdown
 exit
 ```
 
-#### 7.4.3 Configuración de puerto troncal en el switch
+#### 7.4.3 Configuración de puerto troncal en switches
 
-Configurar en todos los switches:
+Configurar en todos los switches de acceso:
 
 ```
 interface g0/1
@@ -276,6 +291,18 @@ switchport trunk native vlan 99
 switchport nonegotiate 
 exit
 ```
+
+Configurar en todos los switches de distribucion/core:
+
+```
+interface g1/0/24
+switchport mode trunk 
+switchport trunk allowed vlan 10,20,30
+switchport trunk native vlan 99
+switchport nonegotiate 
+exit
+```
+
 
 #### 7.4.4. Configuracion de SVI para administracion del switch
 
@@ -306,96 +333,72 @@ exit
 ip default-gateway 10.3.30.1
 ```
 
-### 7.5. Enrutamiento Inter-VLAN
+### 7.5. Enrutamiento Inter-VLAN por medio de SVI's
 
-#### 7.5.1. R-HN (Honduras)
+#### 7.5.1. L3-HN (Honduras)
 
 ```
-interface g0/0/0.10
+interface vlan10
 description estudiantes-honduras
-encapsulation dot1Q 10
 ip address 10.1.10.1 255.255.255.0
+no shutdown
 exit
 
-interface g0/0/0.20
+interface vlan20
 description profesores-honduras
-encapsulation dot1Q 20
 ip address 10.1.20.1 255.255.255.0
 exit
 
-interface g0/0/0.30
+interface vlan30
 description adminred-honduras
-encapsulation dot1Q 30
 ip address 10.1.30.1 255.255.255.0
 exit
-
-interface g0/0/0.99
-description native-honduras
-encapsulation dot1Q 99 native
-exit    
-
-interface g0/0/0
-no shutdown
 ```
 
-#### 7.5.2. R-GT (Guatemala)
+#### 7.5.2. L3-GT (Guatemala)
 
 ```
-interface g0/0/0.10
+interface vlan10
 description estudiantes-guatemala
-encapsulation dot1Q 10
 ip address 10.2.10.1 255.255.255.0
+no shutdown
 exit
 
-interface g0/0/0.20
+interface vlan20
 description profesores-guatemala
-encapsulation dot1Q 20
 ip address 10.2.20.1 255.255.255.0
+no shutdown
 exit
 
-interface g0/0/0.30
+interface vlan30
 description adminred-guatemala
-encapsulation dot1Q 30
 ip address 10.2.30.1 255.255.255.0
+no shutdown
 exit
 
-interface g0/0/0.99
-description native-guatemala
-encapsulation dot1Q 99 native
-exit    
-
-interface g0/0/0
-no shutdown
 ```
 
-#### 7.5.3. R-CR (Costa Rica)
+#### 7.5.3. L3-CR (Costa Rica)
 
 ```
-interface g0/0/0.10
+interface vlan10
 description servidores-costarica
-encapsulation dot1Q 10
 ip address 10.3.10.1 255.255.255.0
-exit
-
-interface g0/0/0.20
-description AdministracionTI-costarica
-encapsulation dot1Q 20
-ip address 10.3.20.1 255.255.255.0
-exit
-
-interface g0/0/0.30
-description adminred-costarica
-encapsulation dot1Q 30
-ip address 10.3.30.1 255.255.255.0
-exit
-
-interface g0/0/0.99
-description native-costarica
-encapsulation dot1Q 99 native
-exit    
-
-interface g0/0/0
 no shutdown
+exit
+
+interface vlan20
+description AdministracionTI-costarica
+ip address 10.3.20.1 255.255.255.0
+no shutdown
+exit
+
+interface vlan30
+description adminred-costarica
+ip address 10.3.30.1 255.255.255.0
+no shutdown
+exit
+
 ```
 
 ### 7.6. Direcciones de los Hosts
@@ -405,7 +408,7 @@ Configurar los host de acuerdo a las instrucciónes, ejemplo: HN1
 ![picture 1](images/24bb9bce334f35f974b4735377556e36cbbe959ec5723d07d075d4c5737a5e8b.png)  
 
 ### 7.7. Configuración de OSPF
-#### 7.7.1 R-HN (Honduras)
+#### 7.7.1 L3-HN (Honduras)
 
 ```
 interface lo0
@@ -417,53 +420,80 @@ network 10.10.10.8 0.0.0.3 area 0
 network 10.1.10.0 0.0.0.255 area 0
 network 10.1.20.0 0.0.0.255 area 0
 network 10.1.30.0 0.0.0.255 area 0
-passive-interface g0/0/0.10
-passive-interface g0/0/0.20
-passive-interface g0/0/0.30
+passive-interface vlan10
+passive-interface vlan20
+passive-interface vlan30
 exit
+
+interface range g1/0/1-2
+ip ospf network point-to-point
+exit
+
 ```
-#### 7.7.2 R-GT (Guatemala)
+#### 7.7.2 L3-GT (Guatemala)
 
 ```
 interface lo0
 ip address 10.1.1.2 255.255.255.255
 exit
+
 router ospf 1
-network 10.10.10.4 0.0.0.3 area 0
-network 10.10.10.8 0.0.0.3 area 0
-network 10.2.10.0 0.0.0.255 area 0
-network 10.2.20.0 0.0.0.255 area 0
-network 10.2.30.0 0.0.0.255 area 0
-passive-interface g0/0/0.10
-passive-interface g0/0/0.201
-passive-interface g0/0/0.30
+exit
+
+interface range g1/0/1-2
+ip ospf 1 area 0
+ip ospf network point-to-point
+interface vlan10
+ip ospf 1 area 0
+interface vlan20
+ip ospf 1 area 0
+interface vlan30
+ip ospf 1 area 0
+exit
+
+router ospf 1
+passive-interface vlan10
+passive-interface vlan20
+passive-interface vlan30
 exit
 
 ```
-#### 7.7.3 R-CR (Costa Rica)
+#### 7.7.3 L3-CR (Costa Rica)
+
 ```
 interface lo0
 ip address 10.1.1.3 255.255.255.255
 exit
+
 router ospf 1
-network 10.10.10.0 0.0.0.3 area 0
-network 10.10.10.4 0.0.0.3 area 0
-network 10.3.10.0 0.0.0.255 area 0
-network 10.3.20.0 0.0.0.255 area 0
-network 10.3.30.0 0.0.0.255 area 0
-passive-interface g0/0/0.10
-passive-interface g0/0/0.20
-passive-interface g0/0/0.30
+exit
+
+interface range g1/0/1-2
+ip ospf 1 area 0
+ip ospf network point-to-point
+interface vlan10
+ip ospf 1 area 0
+interface vlan20
+ip ospf 1 area 0
+interface vlan30
+ip ospf 1 area 0
+exit
+
+router ospf 1
+passive-interface vlan10
+passive-interface vlan20
+passive-interface vlan30
 exit
 
 ```
 
 ### 7.8. Configuración de Salida a Internet
 
-Configuración unicamente en el Router de Costa Rica (R-CR):
+Configuración unicamente en el Switch Capa 3 de Costa Rica (R-CR):
 
 ```
-interface g0/0/1
+interface g1/0/3
+no switchport
 description conexion-ISP
 ip address 12.0.0.2 255.255.255.252
 no shutdown
@@ -477,7 +507,7 @@ default-information originate
 
 #### 7.9.1 ACL Estudiantes Honduras
 
- **Definición de la ACL** en R-HN
+ **Definición de la ACL en L3-HN**
 ```
 ip access-list extended EST-HN
 remark "Denegar trafico de Estudiantes HN hacia Profesores HN y GT"
@@ -495,17 +525,17 @@ remark "Permitir el trafico INTERNO restante"
 permit ip 10.1.10.0 0.0.0.255 10.0.0.0 0.255.255.255
 exit
 ```
-**Asignación a la interfaz (inbound) en R-HN**
+**Asignación a la interfaz (inbound) en L3-HN**
 
 ```
-interface g0/0/0.10
+interface vlan10
 ip access-group EST-HN in
 exit
 ```
 
 #### 7.9.2. ACL Profesores Honduras
 
-**Definición de la ACL en R-HN**
+**Definición de la ACL en L3-HN**
 
 ```
 ip access-list extended PRO-HN
@@ -524,9 +554,9 @@ permit ip any any
 exit
 ```
 
-**Asignación de la ACL a la interfaz (inbound) en R-HN**
+**Asignación de la ACL a la interfaz (inbound) en L3-HN**
 ```
-interface g0/0/0.20
+interface vlan20
 ip access-group PRO-HN in
 exit
 ```
@@ -552,9 +582,9 @@ permit ip any 10.0.0.0 0.255.255.255
 exit
 ```
 
-**Asignación a la interfaz (inbound) en R-GT**
+**Asignación a la interfaz (inbound) en L3-GT**
 ```
-interface g0/0/0.10
+interface vlan10
 ip access-group EST-GT in
 exit
 ```
@@ -580,9 +610,9 @@ permit ip any any
 exit
 ```
 
-**Asignación de la ACL a la interfaz (inbound) en R-GT**
+**Asignación de la ACL a la interfaz (inbound) en L3-GT**
 ```
-interface g0/0/0.20
+interface vlan20
 ip access-group PRO-GT in
 exit
 ```
@@ -596,12 +626,44 @@ exit
 line vty 0 15
 access-class MGMT in 
 ```
-d
+
+#### 7.10 Configuración de NAT en L3-CR
+
+Instrucciones:
+Configurar NAT con sobrecarga, con el siguiente pool de IPs públicas
+- 14.1.1.1 hasta la 14.1.1.5 
+
+>[!IMPORTANT]
+>ESTA PARTE NO LA SOPORTA LA VERSION ACTUAL DE PACKET TRACER EN SWITCHES MULTICAPA
+
+```
+access-list 1 permit 10.1.0.0 0.0.0.255
+access-list 1 permit 10.2.0.0 0.0.0.255
+access-list 1 permit 10.3.0.0 0.0.0.255
+ip nat pool PUBLICAS 14.1.1.1 14.1.1.5 netmask 255.255.255.248
+ip nat inside source list 1 pool PUBLICAS overload
+
+interface G1/0/2
+ip nat inside
+interface G1/0/1
+ip nat inside
+interface vlan10
+ip nat inside
+interface vlan20
+ip nat inside
+interface vlan30
+ip nat inside
+interface Gi1/0/3
+ip nat oustide
+exit
+
+
+
 > [!IMPORTANT]
 >
 > !Has completado el laboratorio, espero te sirva en tu proceso de aprendizaje en redes! (
 
-[Archivo con Laboratorio resuleto](labs/lab2jul_final_completo.pkt)
+[Archivo con Laboratorio resuleto](labs/ccna-lab-10-SVI-OSFP-AC-NAT-final.pkt)
 
 
 
