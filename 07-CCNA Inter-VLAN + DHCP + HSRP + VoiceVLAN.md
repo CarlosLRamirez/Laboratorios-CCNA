@@ -52,6 +52,7 @@ exit
 ```
 interface range gi0/1-2,fa0/21-24
 switchport mode trunk
+switchport trunk allowed vlan 2,3,4
 switchport trunk native vlan 10
 exit
 
