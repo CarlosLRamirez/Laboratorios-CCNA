@@ -1,6 +1,6 @@
 # Laboratorio CCNA: Enrutamiento Inter-VLAN, DHCP, HSRP, Voice Vlan
 
-Update: version 2 en progreso
+Ultima actualizacion: 29/agosto/2024
 
 ## Topologia
 
@@ -152,37 +152,6 @@ no shutdown
 exit
 ```
 
-
-#### Ejemplo de configuracion de HSRP con SVIs (Switches L3):
-
-CORE1: 
-
-```
-interface vlan 2
-ip address 192.168.2.2 255.255.255.0
-standby 2 ip 192.168.2.1
-standby 10 priority 200
-standby 10 preempt
-no shutdown
-exit
-```
-
-CORE2: 
-```
-interface vlan 2
-ip address 192.168.2.3 255.255.255.0
-standby 2 ip 192.168.2.1
-standby 10 priority 200
-standby 10 preempt
-no shutdown
-exit
-```
-
-
-
-
-
-
 #### CORE2
 
 ```
@@ -214,6 +183,33 @@ interface gi0/0/0
 no shutdown
 exit
 ```
+
+#### Ejemplo de configuracion de HSRP con SVIs (Switches L3):
+> 
+> CORE1: 
+> 
+> ```
+> interface vlan 2
+> ip address 192.168.2.2 255.255.255.0
+> standby 2 ip 192.168.2.1
+> standby 10 priority 200
+> standby 10 preempt
+> no shutdown
+> exit
+> ```
+> 
+> CORE2: 
+> ```
+> interface vlan 2
+> ip address 192.168.2.3 255.255.255.0
+> standby 2 ip 192.168.2.1
+> standby 10 priority 200
+> standby 10 preempt
+> no shutdown
+> exit
+> ```
+
+
 
 ### Servidor DHCP (Router)
 
