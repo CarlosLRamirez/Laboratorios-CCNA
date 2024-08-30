@@ -8,8 +8,8 @@ Update: version 2 en progreso
 
 ## Archivo PT
 
-Configuración [final](labs/ccna-lab-dhcp-hsrp-voicevlan.pkt)
 Configuración verson 2 [final] (labs/Lab07-ver2-inicial.pkt)
+
 ## Configuración paso a paso
 
 ### Configuracion básica
