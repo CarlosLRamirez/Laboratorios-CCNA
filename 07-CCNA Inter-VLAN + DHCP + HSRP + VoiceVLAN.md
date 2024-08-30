@@ -94,6 +94,7 @@ En los switches de distribucion:
 ```
 interface range fa0/19-24
 switchport mode trunk
+switchport trunk allowed vlan 2,3,4
 switchport trunk allowed vlan 2,3,4,10
 switchport trunk native vlan 10
 exit
