@@ -8,9 +8,7 @@ Update: version 2 en progreso
 
 ## Archivo PT
 
-
-Configuración version 2 [final] (labs/Lab07-ver2-inicial.pkt)
-
+[Archivo Packet Tracer configurado](labs/07-ccna-lab-dhcp-hsrp-nat-voicevlan-final.pkt)
 
 ## Configuración paso a paso
 
@@ -19,7 +17,7 @@ Configuración version 2 [final] (labs/Lab07-ver2-inicial.pkt)
 En todos los dispostivos de red:
 
 ```
-hostname CORE2
+hostname ISP
 ip domain-name edutek.edu
 enable secret cisco
 no ip domain-lookup 
@@ -96,7 +94,6 @@ En los switches de distribucion:
 ```
 interface range fa0/19-24
 switchport mode trunk
-switchport trunk allowed vlan 2,3,4
 switchport trunk allowed vlan 2,3,4,10
 switchport trunk native vlan 10
 exit
@@ -155,6 +152,37 @@ no shutdown
 exit
 ```
 
+
+#### Ejemplo de configuracion de HSRP con SVIs (Switches L3):
+
+CORE1: 
+
+```
+interface vlan 2
+ip address 192.168.2.2 255.255.255.0
+standby 2 ip 192.168.2.1
+standby 10 priority 200
+standby 10 preempt
+no shutdown
+exit
+```
+
+CORE2: 
+```
+interface vlan 2
+ip address 192.168.2.3 255.255.255.0
+standby 2 ip 192.168.2.1
+standby 10 priority 200
+standby 10 preempt
+no shutdown
+exit
+```
+
+
+
+
+
+
 #### CORE2
 
 ```
@@ -205,25 +233,25 @@ ip dhcp excluded-address 192.168.10.1 192.168.10.99
 ip dhcp pool datos
 network 192.168.2.0 255.255.255.0
 default-router 192.168.2.1
-dns-server 10.10.10.10
+dns-server 8.8.8.8
 domain-name edutek.edu
 
 ip dhcp pool voip
 network 192.168.3.0 255.255.255.0
 default-router 192.168.3.1
-dns-server 10.10.10.10
+dns-server 8.8.8.8
 domain-name edutek.edu
 
 ip dhcp pool iot
 network 192.168.4.0 255.255.255.0
 default-router 192.168.4.1
-dns-server 10.10.10.10
+dns-server 8.8.8.8
 domain-name edutek.edu
 
 ip dhcp pool it
 network 192.168.10.0 255.255.255.0
 default-router 192.168.10.1
-dns-server 10.10.10.10
+dns-server 8.8.8.8
 domain-name edutek.edu
 exit
 ```
@@ -253,9 +281,25 @@ description to ISP
 ip address 10.0.0.1 255.255.255.252
 no shutdown
 exit
+
+router ospf 1
+router-id 1.1.1.1
+passive-interface GigabitEthernet0/0/0.2
+passive-interface GigabitEthernet0/0/0.3
+passive-interface GigabitEthernet0/0/0.4
+passive-interface GigabitEthernet0/0/0.10
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+network 192.168.2.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+network 192.168.4.0 0.0.0.255 area 0
+network 192.168.10.0 0.0.0.255 area 0
+exit
+
+
 ```
 
-En CORE1
+En CORE2
 
 ```
 interface Se0/1/0
@@ -267,6 +311,22 @@ description to ISP
 ip address 10.0.0.6 255.255.255.252
 no shutdown
 exit
+
+router ospf 1
+router-id 2.2.2.2
+passive-interface GigabitEthernet0/0/0.2
+passive-interface GigabitEthernet0/0/0.3
+passive-interface GigabitEthernet0/0/0.4
+passive-interface GigabitEthernet0/0/0.10
+network 10.0.0.4 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+network 192.168.2.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+network 192.168.4.0 0.0.0.255 area 0
+network 192.168.10.0 0.0.0.255 area 0
+exit
+
+
 ```
 
 En ISP
@@ -286,9 +346,34 @@ description INTERNET
 ip address 200.10.10.2 255.255.255.252
 no shutdown
 exit
+
+ip route 0.0.0.0 0.0.0.0 200.10.10.1
+
+router ospf 1
+router-id 3.3.3.3
+network 10.0.0.4 0.0.0.3 area 0
+network 10.0.0.0 0.0.0.3 area 0
+default-information originate 
+exit
+
 ```
 
+### Configuracion de NAT con sobrecarga (PAT) con la IP de interfaz
 
+```
+access-list 1 permit 192.168.2.0 0.0.0.255
+access-list 1 permit 192.168.3.0 0.0.0.255
+access-list 1 permit 192.168.4.0 0.0.0.255
+access-list 1 permit 192.168.10.0 0.0.0.255
+ip nat inside source list 1 interface GigabitEthernet0/0 overload
+interface GigabitEthernet0/0
+ip nat outside
+interface Serial0/1/0
+ip nat inside
+interface Serial0/1/1
+ip nat inside
+exit
+```
 
 
 
