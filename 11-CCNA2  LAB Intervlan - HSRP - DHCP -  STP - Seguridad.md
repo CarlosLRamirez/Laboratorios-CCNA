@@ -1,3 +1,25 @@
+# Laboratorio 11 - CCNA2
+
+Temas Cubiertos:
+
+- Intervlan Routing con Sub-interfaces
+- Etherchannel
+- Voice VLAN
+- Spanning Tree (Portfast, BPDU Guard)
+- HSRP
+- DHCP Server
+- Port Security
+- DHCP Snooping
+- ARP Dynamic Inspection
+
+## Topologia de Red
+
+![alt text](images/ejercicio30ene25.png)
+
+## LAboratorio de Packet Tracer
+
+[Este es el laboratorio con la configuración inicial](labs/11-ccna-lav-integracion-ccna2.pkt)
+
 ## SW1 (Switch Acceso)
 
 ### Configuración general
