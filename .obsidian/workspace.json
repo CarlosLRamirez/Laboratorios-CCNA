@@ -4,15 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "68bb55aa5f5c2d29",
+        "id": "45fe4cf5155d8abd",
         "type": "tabs",
         "children": [
           {
-            "id": "8acc34bcc21c45d5",
+            "id": "f37024533a9fd919",
             "type": "leaf",
             "state": {
               "type": "empty",
-              "state": {}
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -34,8 +36,11 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
-              }
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -50,7 +55,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -58,7 +65,9 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
         ]
@@ -81,6 +90,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "13-CCNA2 Integracion.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -88,7 +98,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 13-CCNA2 Integracion"
             }
           },
           {
@@ -97,9 +109,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "13-CCNA2 Integracion.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 13-CCNA2 Integracion"
             }
           },
           {
@@ -109,8 +124,12 @@
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
-              }
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -118,15 +137,21 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -138,6 +163,8 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "8acc34bcc21c45d5",
-  "lastOpenFiles": []
+  "active": "01d02312b1b6aedd",
+  "lastOpenFiles": [
+    "13-CCNA2 Integracion.md"
+  ]
 }
