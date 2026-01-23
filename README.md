@@ -1,6 +1,6 @@
 # Laboratorios CCNA
 
-> Estos laboratorios han sido publicados en mi blog tecnico en este (enlace)[https://carloslramirez.com/blog/series/ccna/]
+> Estos laboratorios han sido publicados en mi blog tecnico en este [enlace](https://carloslramirez.com/blog/series/ccna/)
 
 
 Repositorio con Laboratorios utilizando Packet Tracer para preparase para el examen CCNA
