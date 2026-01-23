@@ -1,4 +1,8 @@
 # Laboratorios CCNA
+
+> Estos laboratorios han sido publicados en mi blog tecnico en este (enlace)[https://carloslramirez.com/blog/series/ccna/]
+
+
 Repositorio con Laboratorios utilizando Packet Tracer para preparase para el examen CCNA
 
 - [Comandos Basicos de Cisco](01-CCNA%20lab%20Configuración%20Basica%20Cisco.md)
